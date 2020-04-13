@@ -1,8 +1,8 @@
 
 EXTENSION = pgq_ext
 
-EXT_VERSION = 3.1
-EXT_OLD_VERSIONS =
+EXT_VERSION = 3.1.1
+EXT_OLD_VERSIONS = 3.1
 
 Contrib_regress = init_noext test_pgq_ext test_upgrade
 Extension_regress = init_ext test_pgq_ext
@@ -22,3 +22,8 @@ deb:
 
 debclean:
 	make -f debian/rules debclean
+
+TARNAME = $(EXTENSION)-$(EXT_VERSION)
+dist:
+	git archive --format=tar.gz --prefix=$(TARNAME)/ -o $(TARNAME).tar.gz HEAD
+

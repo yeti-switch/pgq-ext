@@ -4,6 +4,7 @@
 *.swp
 *.dump
 *--*
+*.gz
 
 sql/*/*.sql
 sql/*/results
@@ -25,3 +26,8 @@ pgq_ext.sql
 pgq_ext.upgrade.sql
 
 results/
+
+docs/Data
+docs/html
+docs/sql
+
