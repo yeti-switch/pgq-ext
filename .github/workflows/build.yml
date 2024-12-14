@@ -24,7 +24,7 @@ jobs:
       - name: build
         run: make deb
 
-      - uses: furmur/upload-debian-pkg-action@v2
+      - uses: yeti-switch/upload-debian-pkg-action@v2
         with:
           pkgs: '../*.deb'
           pkgs_to_remove: 'postgresql-16-pgq-ext'
