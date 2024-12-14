@@ -18,7 +18,7 @@ dox: cleandox $(SRCS)
 
 deb:
 	make -f debian/rules genfiles
-	debuild -us -uc -b
+	dpkg-buildpackage -us -uc -b
 
 debclean:
 	make -f debian/rules debclean
