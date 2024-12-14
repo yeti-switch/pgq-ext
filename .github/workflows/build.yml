@@ -20,7 +20,7 @@ jobs:
         run: echo 16 > debian/pgversions
 
       - name: install build deps
-        run: apt -y --no-install-recommends install python3 postgresql-server-dev-all
+        run: apt -y --no-install-recommends install python3 postgresql-server-dev-all dpkg-dev
       - name: build
         run: make deb
 
