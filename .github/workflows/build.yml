@@ -1,0 +1,37 @@
+name: build
+on: workflow_dispatch
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: debian:bookworm
+    steps:
+      - name: install aux deps
+        run: apt update && apt -y --no-install-recommends install git ca-certificates curl gpg
+      - name: add pgdg pkg repo
+        run: >
+          echo "deb [arch=amd64] http://apt.postgresql.org/pub/repos/apt bookworm-pgdg main" >> /etc/apt/sources.list.d/pgdg.list &&
+          curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor > /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg
+      - run: apt update
+
+      - name: clone repo
+        uses: actions/checkout@v3
+
+      - name: override pgversions
+        run: echo 16 > debian/pgversions
+
+      - name: install build deps
+        run: apt -y --no-install-recommends build-dep .
+      - name: build
+        run: make deb
+
+      - uses: furmur/upload-debian-pkg-action@v2
+        with:
+          pkgs: '../*.deb'
+          pkgs_to_remove: 'postgresql-16-pgq-ext'
+
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
+
+          s3_access_key_id: ${{ secrets.DEB_AWS_ACCESS_KEY_ID }}
+          s3_secret_access_key: ${{ secrets.DEB_AWS_SECRET_ACCESS_KEY }}
+          s3_endpoint_url: ${{ secrets.DEB_AWS_ENDPOINT }}
