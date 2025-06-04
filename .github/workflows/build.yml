@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: override pgversions
-        run: echo 16 > debian/pgversions
+        run: echo -e "16\n17" > debian/pgversions
 
       - name: install build deps
         run: apt -y --no-install-recommends install debhelper python3 postgresql-server-dev-all build-essential
@@ -27,7 +27,7 @@ jobs:
       - uses: yeti-switch/upload-debian-pkg-action@v2
         with:
           pkgs: '../*.deb'
-          pkgs_to_remove: 'postgresql-16-pgq-ext'
+          pkgs_to_remove: 'postgresql-*-pgq-ext'
 
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
@@ -35,3 +35,4 @@ jobs:
           s3_access_key_id: ${{ secrets.DEB_AWS_ACCESS_KEY_ID }}
           s3_secret_access_key: ${{ secrets.DEB_AWS_SECRET_ACCESS_KEY }}
           s3_endpoint_url: ${{ secrets.DEB_AWS_ENDPOINT }}
+          s3_prefix: '1.14'
