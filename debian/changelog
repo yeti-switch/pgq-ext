@@ -1,3 +1,7 @@
+pgq-ext (3.1.1-2) unstable; urgency=low
+  * build for pg 18
+ -- Michael Furmur <furmur@pm.me>  Fri, 26 Sep 2025 14:14:19 +0300
+
 pgq-ext (3.1.1-1) unstable; urgency=low
 
   * v3.1.1
