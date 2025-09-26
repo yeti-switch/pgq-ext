@@ -47,12 +47,12 @@ jobs:
           curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor > /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg
       - run: apt update
 
-      - name: clone repo
+     - name: clone repo
         uses: actions/checkout@v3
 
      - name: install build deps
         run: apt -y --no-install-recommends install debhelper python3 postgresql-server-dev-all build-essential
-      - name: build
+     - name: build
         run: make deb
 
       - uses: yeti-switch/upload-debian-pkg-action@v3
